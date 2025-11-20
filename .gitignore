@@ -1,0 +1,50 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.csproj.user
+*.vscode/
+
+# Runtime
+*.runtimeconfig.json
+*.dll
+*.exe
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+publish/
+release/
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Visual Studio
+.vs/
+*.csproj.userprefs
+
+# Rider
+.idea/
+*.sln.iml
+
+# macOS
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+ehthumbs.db
+[Tt]humbs.db
+$RECYCLE.BIN/
+
+# VS Code
+.settings/

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity Tutorials Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-login:hover {
+            background: #5a6fd8;
+        }
+
+        .error-message {
+            color: #d9534f;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8d7da;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .demo-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">🎮</div>
+        <h1 class="login-title">Unity Tutorials Pro</h1>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="password" id="password" class="form-control" placeholder="Введите пароль" required />
+            </div>
+            
+            <button type="submit" class="btn-login">Войти</button>
+        </form>
+
+        <div class="demo-info">
+            <strong>Демо доступ:</strong><br>
+            Пароль: <code>unity2024</code>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            if (password === 'unity2024') {
+                // Показываем демо-контент
+                showDashboard();
+            } else {
+                errorDiv.textContent = 'Неверный пароль. Попробуйте: unity2024';
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        function showDashboard() {
+            document.body.innerHTML = `
+                <div class="header">
+                    <div class="logo">🎮 Unity Tutorials</div>
+                    <button onclick="location.reload()" class="logout-btn">Выйти</button>
+                </div>
+
+                <div class="container">
+                    <div class="welcome-section">
+                        <h1>Добро пожаловать!</h1>
+                        <p>Демо-версия Unity Tutorials Pro</p>
+                    </div>
+
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <h3 class="card-title">🎮 3D Управление персонажем</h3>
+                            <p class="card-description">Полное руководство по созданию плавного управления в 3D</p>
+                            <button class="btn" onclick="showTutorial('3d-movement')">Изучить</button>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <h3 class="card-title">👾 2D Управление персонажем</h3>
+                            <p class="card-description">Создание классического 2D управления для платформеров</p>
+                            <button class="btn" onclick="showTutorial('2d-movement')">Изучить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .header { background: #667eea; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+                    .logo { font-size: 1.5rem; font-weight: bold; }
+                    .logout-btn { background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; }
+                    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+                    .welcome-section { text-align: center; margin-bottom: 3rem; }
+                    .tutorials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+                    .tutorial-card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+                    .card-title { font-size: 1.3rem; margin-bottom: 1rem; color: #333; }
+                    .card-description { color: #666; margin-bottom: 1.5rem; }
+                    .btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; }
+                </style>
+            `;
+        }
+
+        function showTutorial(tutorialId) {
+            alert('Демо-версия: В полной версии здесь будет туториал ' + tutorialId);
+        }
+    </script>
+</body>
+</html>

@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Unity Tutorials Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,113 +12,745 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
         }
 
-        .login-container {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Login Styles */
+        .login-container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-title {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .form-control {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            background: #f8fafc;
         }
 
         .form-control:focus {
-            border-color: #667eea;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             outline: none;
         }
 
-        .btn-login {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-login:hover {
-            background: #5a6fd8;
-        }
-
-        .error-message {
-            color: #d9534f;
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px;
-            background: #f8d7da;
-            border-radius: 5px;
-            border: 1px solid #f5c6cb;
-        }
-
         .demo-info {
-            background: #e7f3ff;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 14px;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .demo-password {
+            background: var(--dark);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        /* Dashboard Styles */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tutorial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tutorial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .difficulty {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .difficulty-beginner { background: #c6f6d5; color: #22543d; }
+        .difficulty-intermediate { background: #fed7d7; color: #742a2a; }
+        .difficulty-advanced { background: #e9d8fd; color: #44337a; }
+
+        .duration {
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tutorial Page Styles */
+        .tutorial-header {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tutorial-category {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructions-section, .code-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+            
+            .nav-link {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">🎮</div>
-        <h1 class="login-title">Unity Tutorials Pro</h1>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <input type="password" id="password" class="form-control" placeholder="Введите пароль" required />
-            </div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;">
+        <div class="login-container">
+            <div class="logo" style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
+            <h1 class="login-title">Unity Tutorials Pro</h1>
+            <p class="login-subtitle">Премиум обучение разработке игр на Unity</p>
             
-            <button type="submit" class="btn-login">Войти</button>
-        </form>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        <i class="fas fa-lock"></i> Пароль доступа
+                    </label>
+                    <input type="password" id="password" class="form-control" placeholder="Введите пароль для входа" required />
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Войти в систему
+                </button>
+            </form>
 
-        <div class="demo-info">
-            <strong>Демо доступ:</strong><br>
-            Пароль: <code>unity2024</code>
+            <div class="demo-info">
+                <h4><i class="fas fa-info-circle"></i> Демо доступ</h4>
+                <p>Для тестирования используйте пароль:</p>
+                <div class="demo-password">unity2024</div>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                    В демо-версии доступны все туториалы и функции
+                </p>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" style="display: none;">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                Unity Tutorials Pro
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="showSection('dashboard')">
+                    <i class="fas fa-home"></i> Главная
+                </a>
+                <a href="#" class="nav-link" onclick="showSection('tutorials')">
+                    <i class="fas fa-book"></i> Все туториалы
+                </a>
+                <a href="#" class="nav-link" onclick="showSection('progress')">
+                    <i class="fas fa-chart-line"></i> Прогресс
+                </a>
+                <button onclick="logout()" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Выйти
+                </button>
+            </div>
         </div>
 
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        <div class="container">
+            <!-- Dashboard Section -->
+            <div id="dashboardSection">
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Добро пожаловать в Unity Tutorials Pro! 🎉</h1>
+                    <p class="welcome-subtitle">Освойте разработку игр на Unity с помощью наших профессиональных туториалов и практических примеров</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">Туториалов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Часов обучения</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Практических проектов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Практических знаний</div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3 class="feature-title">Структурированное обучение</h3>
+                        <p>От основ до продвинутых техник</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💻</div>
+                        <h3 class="feature-title">Практические примеры</h3>
+                        <p>Реальные проекты и кейсы</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Экспертные знания</h3>
+                        <p>От профессиональных разработчиков</p>
+                    </div>
+                </div>
+
+                <h2 style="color: white; margin: 3rem 0 1.5rem 0; text-align: center;">Популярные туториалы</h2>
+                <div class="tutorials-grid">
+                    <!-- Tutorial cards will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Tutorials Section -->
+            <div id="tutorialsSection" style="display: none;">
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Все туториалы 🎮</h1>
+                    <p class="welcome-subtitle">Полная библиотека обучающих материалов по Unity</p>
+                </div>
+                <div class="tutorials-grid" id="allTutorials">
+                    <!-- All tutorials will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progressSection" style="display: none;">
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Ваш прогресс 📊</h1>
+                    <p class="welcome-subtitle">Отслеживайте свои успехи в обучении</p>
+                </div>
+                <div class="progress-section">
+                    <h3 style="margin-bottom: 1rem;">Общий прогресс обучения</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 35%;"></div>
+                    </div>
+                    <p>35% завершено</p>
+                </div>
+                <div class="tutorials-grid">
+                    <div class="tutorial-card">
+                        <div class="card-icon">✅</div>
+                        <h3 class="card-title">Завершенные туториалы</h3>
+                        <div class="card-meta">
+                            <span class="duration"><i class="fas fa-check-circle" style="color: var(--success);"></i> 8 из 25</span>
+                        </div>
+                        <p>Продолжайте в том же духе! Вы отлично справляетесь.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="card-icon">⏱️</div>
+                        <h3 class="card-title">Время обучения</h3>
+                        <div class="card-meta">
+                            <span class="duration"><i class="fas fa-clock"></i> 18 часов</span>
+                        </div>
+                        <p>Вы посвятили обучению 18 часов. Отличный результат!</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="card-icon">🏆</div>
+                        <h3 class="card-title">Достижения</h3>
+                        <div class="card-meta">
+                            <span class="duration"><i class="fas fa-trophy"></i> 12 из 30</span>
+                        </div>
+                        <p>Получено 12 достижений из 30 возможных.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Tutorials Data
+        const tutorials = [
+            {
+                id: '3d-movement',
+                title: '🎮 3D Управление персонажем',
+                description: 'Полное руководство по созданию плавного управления в 3D с использованием Rigidbody и CharacterController',
+                category: '3D Разработка',
+                difficulty: 'beginner',
+                duration: '30 минут',
+                icon: '🎮',
+                completed: true
+            },
+            {
+                id: '2d-movement',
+                title: '👾 2D Управление персонажем',
+                description: 'Создание классического 2D управления для платформеров с анимациями и физикой',
+                category: '2D Разработка',
+                difficulty: 'beginner',
+                duration: '25 минут',
+                icon: '👾',
+                completed: true
+            },
+            {
+                id: 'ui-system',
+                title: '🖥️ UI Система',
+                description: 'Создание интерактивного пользовательского интерфейса с кнопками, слайдерами и меню',
+                category: 'UI/UX',
+                difficulty: 'intermediate',
+                duration: '45 минут',
+                icon: '🖥️',
+                completed: false
+            },
+            {
+                id: 'animation-basics',
+                title: '🎭 Основы анимации',
+                description: 'Работа с Animator Controller и создание плавных анимаций персонажей',
+                category: 'Анимация',
+                difficulty: 'beginner',
+                duration: '35 минут',
+                icon: '🎭',
+                completed: false
+            },
+            {
+                id: 'physics-system',
+                title: '⚡ Физика и коллизии',
+                description: 'Изучение физических взаимодействий, коллайдеров и триггеров',
+                category: 'Физика',
+                difficulty: 'intermediate',
+                duration: '40 минут',
+                icon: '⚡',
+                completed: false
+            },
+            {
+                id: 'audio-system',
+                title: '🔊 Аудио система',
+                description: 'Работа со звуками, музыкой и аудио микшером в Unity',
+                category: 'Аудио',
+                difficulty: 'beginner',
+                duration: '20 минут',
+                icon: '🔊',
+                completed: false
+            },
+            {
+                id: 'shaders-basics',
+                title: '🌈 Основы шейдеров',
+                description: 'Создание кастомных шейдеров с помощью Shader Graph',
+                category: 'Графика',
+                difficulty: 'advanced',
+                duration: '60 минут',
+                icon: '🌈',
+                completed: false
+            },
+            {
+                id: 'multiplayer',
+                title: '🌐 Мультиплеер',
+                description: 'Создание онлайн-игр с помощью Netcode for GameObjects',
+                category: 'Сетевая игра',
+                difficulty: 'advanced',
+                duration: '90 минут',
+                icon: '🌐',
+                completed: false
+            },
+            {
+                id: 'ai-pathfinding',
+                title: '🤖 ИИ и навигация',
+                description: 'Реализация искусственного интеллекта и системы навигации NavMesh',
+                category: 'Искусственный интеллект',
+                difficulty: 'intermediate',
+                duration: '50 минут',
+                icon: '🤖',
+                completed: false
+            },
+            {
+                id: 'optimization',
+                title: '🚀 Оптимизация',
+                description: 'Техники оптимизации производительности игр',
+                category: 'Производительность',
+                difficulty: 'advanced',
+                duration: '55 минут',
+                icon: '🚀',
+                completed: false
+            },
+            {
+                id: 'vfx-particles',
+                title: '✨ VFX и частицы',
+                description: 'Создание визуальных эффектов с помощью системы частиц',
+                category: 'Визуальные эффекты',
+                difficulty: 'intermediate',
+                duration: '40 минут',
+                icon: '✨',
+                completed: false
+            },
+            {
+                id: 'mobile-development',
+                title: '📱 Мобильная разработка',
+                description: 'Особенности разработки игр для мобильных устройств',
+                category: 'Платформы',
+                difficulty: 'intermediate',
+                duration: '35 минут',
+                icon: '📱',
+                completed: false
+            }
+        ];
+
+        // Login Functionality
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -125,60 +758,215 @@
             const errorDiv = document.getElementById('errorMessage');
             
             if (password === 'unity2024') {
-                // Показываем демо-контент
                 showDashboard();
             } else {
-                errorDiv.textContent = 'Неверный пароль. Попробуйте: unity2024';
+                errorDiv.textContent = '❌ Неверный пароль. Попробуйте: unity2024';
                 errorDiv.style.display = 'block';
             }
         });
 
         function showDashboard() {
-            document.body.innerHTML = `
-                <div class="header">
-                    <div class="logo">🎮 Unity Tutorials</div>
-                    <button onclick="location.reload()" class="logout-btn">Выйти</button>
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'block';
+            loadTutorials();
+        }
+
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('tutorialsSection').style.display = 'none';
+            document.getElementById('progressSection').style.display = 'none';
+            
+            // Show selected section
+            document.getElementById(sectionName + 'Section').style.display = 'block';
+        }
+
+        function loadTutorials() {
+            const popularTutorialsContainer = document.querySelector('#dashboardSection .tutorials-grid');
+            const allTutorialsContainer = document.getElementById('allTutorials');
+            
+            // Clear containers
+            popularTutorialsContainer.innerHTML = '';
+            allTutorialsContainer.innerHTML = '';
+            
+            // Load popular tutorials (first 6)
+            tutorials.slice(0, 6).forEach(tutorial => {
+                popularTutorialsContainer.appendChild(createTutorialCard(tutorial));
+            });
+            
+            // Load all tutorials
+            tutorials.forEach(tutorial => {
+                allTutorialsContainer.appendChild(createTutorialCard(tutorial));
+            });
+        }
+
+        function createTutorialCard(tutorial) {
+            const card = document.createElement('div');
+            card.className = 'tutorial-card';
+            card.innerHTML = `
+                <div class="card-icon">${tutorial.icon}</div>
+                <h3 class="card-title">${tutorial.title}</h3>
+                <p class="card-description">${tutorial.description}</p>
+                <div class="card-meta">
+                    <span class="difficulty difficulty-${tutorial.difficulty}">
+                        ${tutorial.difficulty === 'beginner' ? 'Начальный' : 
+                          tutorial.difficulty === 'intermediate' ? 'Средний' : 'Продвинутый'}
+                    </span>
+                    <span class="duration">
+                        <i class="fas fa-clock"></i> ${tutorial.duration}
+                    </span>
                 </div>
-
-                <div class="container">
-                    <div class="welcome-section">
-                        <h1>Добро пожаловать!</h1>
-                        <p>Демо-версия Unity Tutorials Pro</p>
-                    </div>
-
-                    <div class="tutorials-grid">
-                        <div class="tutorial-card">
-                            <h3 class="card-title">🎮 3D Управление персонажем</h3>
-                            <p class="card-description">Полное руководство по созданию плавного управления в 3D</p>
-                            <button class="btn" onclick="showTutorial('3d-movement')">Изучить</button>
-                        </div>
-                        
-                        <div class="tutorial-card">
-                            <h3 class="card-title">👾 2D Управление персонажем</h3>
-                            <p class="card-description">Создание классического 2D управления для платформеров</p>
-                            <button class="btn" onclick="showTutorial('2d-movement')">Изучить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <style>
-                    .header { background: #667eea; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-                    .logo { font-size: 1.5rem; font-weight: bold; }
-                    .logout-btn { background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; }
-                    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-                    .welcome-section { text-align: center; margin-bottom: 3rem; }
-                    .tutorials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-                    .tutorial-card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-                    .card-title { font-size: 1.3rem; margin-bottom: 1rem; color: #333; }
-                    .card-description { color: #666; margin-bottom: 1.5rem; }
-                    .btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; }
-                </style>
+                <button class="btn" onclick="showTutorial('${tutorial.id}')" style="width: 100%;">
+                    <i class="fas fa-play"></i> ${tutorial.completed ? 'Повторить' : 'Начать изучение'}
+                </button>
+                ${tutorial.completed ? '<div style="margin-top: 10px; color: var(--success);"><i class="fas fa-check-circle"></i> Завершено</div>' : ''}
             `;
+            return card;
         }
 
         function showTutorial(tutorialId) {
-            alert('Демо-версия: В полной версии здесь будет туториал ' + tutorialId);
+            const tutorial = tutorials.find(t => t.id === tutorialId);
+            if (tutorial) {
+                // Create tutorial page
+                document.getElementById('dashboardScreen').innerHTML = `
+                    <div class="header">
+                        <div class="logo">
+                            <i class="fas fa-gamepad"></i>
+                            Unity Tutorials Pro
+                        </div>
+                        <div class="nav-links">
+                            <button onclick="showDashboard()" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Назад
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="tutorial-header">
+                            <div class="tutorial-category">${tutorial.category}</div>
+                            <h1 class="welcome-title">${tutorial.title}</h1>
+                            <p class="welcome-subtitle">${tutorial.description}</p>
+                        </div>
+
+                        <div class="content-grid">
+                            <div class="instructions-section">
+                                <h2 class="section-title"><i class="fas fa-book"></i> Инструкции</h2>
+                                <div class="instructions-content">
+                                    <h3>🎯 Цели обучения:</h3>
+                                    <ul>
+                                        <li>Освоить основные принципы ${tutorial.category.toLowerCase()}</li>
+                                        <li>Реализовать практический пример</li>
+                                        <li>Понимать лучшие практики</li>
+                                        <li>Применить знания в своих проектах</li>
+                                    </ul>
+                                    
+                                    <h3>📝 Пошаговая инструкция:</h3>
+                                    <ol>
+                                        <li>Создайте новый проект Unity</li>
+                                        <li>Настройте базовую сцену</li>
+                                        <li>Импортируйте необходимые ассеты</li>
+                                        <li>Создайте и настройте скрипты</li>
+                                        <li>Протестируйте функциональность</li>
+                                        <li>Оптимизируйте решение</li>
+                                    </ol>
+
+                                    <div style="background: #fff3cd; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                        <strong>💡 Совет:</strong> Сохраняйте резервные копии проекта перед внесением major изменений.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="code-section">
+                                <h2 class="section-title"><i class="fas fa-code"></i> Пример кода</h2>
+                                <div class="code-block">
+                                    <pre><code>using UnityEngine;
+
+public class ${tutorial.id.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()).replace(/ /g, '')} : MonoBehaviour
+{
+    [Header("Настройки")]
+    [SerializeField] private float exampleParameter = 1.0f;
+    
+    void Start()
+    {
+        Debug.Log("🚀 Инициализация системы...");
+        InitializeSystem();
+    }
+    
+    void Update()
+    {
+        // Основная логика здесь
+        HandleInput();
+        UpdateSystem();
+    }
+    
+    void InitializeSystem()
+    {
+        // Инициализация компонентов
+        Debug.Log("✅ Система готова к работе!");
+    }
+    
+    void HandleInput()
+    {
+        // Обработка пользовательского ввода
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PerformAction();
         }
+    }
+    
+    void UpdateSystem()
+    {
+        // Обновление состояния системы
+    }
+    
+    void PerformAction()
+    {
+        Debug.Log("🎯 Действие выполнено!");
+    }
+}</code></pre>
+                                </div>
+                                <button class="btn" onclick="downloadCode('${tutorial.id}')" style="margin-top: 1rem; width: 100%;">
+                                    <i class="fas fa-download"></i> Скачать полный код
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="progress-section">
+                            <h3><i class="fas fa-tasks"></i> Прогресс изучения</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${tutorial.completed ? '100' : '65'}%;"></div>
+                            </div>
+                            <p>${tutorial.completed ? '100% завершено' : '65% завершено'}</p>
+                            <button class="btn" onclick="markAsCompleted('${tutorial.id}')" style="margin-top: 1rem;">
+                                <i class="fas fa-check"></i> ${tutorial.completed ? 'Туториал завершен' : 'Отметить как завершенный'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function downloadCode(tutorialId) {
+            alert('📥 В полной версии здесь будет скачивание полного кода для туториала: ' + tutorialId);
+        }
+
+        function markAsCompleted(tutorialId) {
+            const tutorial = tutorials.find(t => t.id === tutorialId);
+            if (tutorial) {
+                tutorial.completed = true;
+                alert('✅ Туториал отмечен как завершенный!');
+                showDashboard();
+            }
+        }
+
+        // Initialize
+        showSection('dashboard');
     </script>
 </body>
 </html>
